@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 HELIX - Database Stats</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; }
+        h1 { color: #0f172a; }
+        .stat { padding: 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; }
+        .stat:last-child { border: none; }
+        .stat .number { font-size: 24px; font-weight: 700; color: #2563eb; }
+        .stat .label { color: #64748b; }
+        .btn { display: inline-block; background: #2563eb; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Database Statistics</h1>
+        <div class="stat">
+            <span class="label">Evidence Atoms</span>
+            <span class="number">{{ atom_count }}</span>
+        </div>
+        <div class="stat">
+            <span class="label">Reports</span>
+            <span class="number">{{ report_count }}</span>
+        </div>
+        <div class="stat">
+            <span class="label">Users</span>
+            <span class="number">{{ user_count }}</span>
+        </div>
+        <a href="/" class="btn">← Back</a>
+    </div>
+</body>
+</html>
+

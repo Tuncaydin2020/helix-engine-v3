@@ -23,15 +23,26 @@
             border-radius: 24px;
             box-shadow: 0 8px 48px rgba(0,0,0,0.08);
         }
-        h1 { font-size: 28px; color: #0f172a; }
+        h1 {
+            font-size: 28px;
+            color: #0f172a;
+        }
         .score-box {
             background: #f8fafc;
             padding: 24px;
             border-radius: 16px;
             margin: 16px 0;
         }
-        .score-number { font-size: 48px; font-weight: 700; color: #2563eb; }
-        .classification { font-size: 24px; font-weight: 600; margin: 8px 0; }
+        .score-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .classification {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 8px 0;
+        }
         .strong { color: #16a34a; }
         .moderate { color: #eab308; }
         .weak { color: #ea580c; }
@@ -42,7 +53,10 @@
             border-radius: 12px;
             margin: 16px 0;
         }
-        .reasoning li { padding: 4px 0; list-style-type: none; }
+        .reasoning li {
+            padding: 4px 0;
+            list-style-type: none;
+        }
         .hypothesis {
             background: #eff6ff;
             padding: 16px;
@@ -60,8 +74,12 @@
             border-radius: 8px;
             text-decoration: none;
             margin-top: 8px;
+            transition: background 0.2s;
+            cursor: pointer;
         }
-        .btn:hover { background: #1d4ed8; }
+        .btn:hover {
+            background: #1d4ed8;
+        }
         .evidence-meta {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -71,10 +89,37 @@
             border-radius: 12px;
             margin-bottom: 16px;
         }
-        .evidence-meta span { font-size: 14px; }
-        .evidence-meta strong { color: #0f172a; }
-        .footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 30px; }
-        @media (max-width: 600px) { .evidence-meta { grid-template-columns: 1fr; } }
+        .evidence-meta span {
+            font-size: 14px;
+        }
+        .evidence-meta strong {
+            color: #0f172a;
+        }
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .evidence-meta {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 24px;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -113,9 +158,13 @@
             <p>{{ result.hypothesis }}</p>
         </div>
 
-        <a href="/" class="btn">← New Analysis</a>
+        <div class="button-group">
+            <a href="/report/{{ result.atom.source }}" class="btn">📄 Download PDF Report</a>
+            <a href="/" class="btn">🔬 New Analysis</a>
+        </div>
 
         <div class="footer">HELIX Engine v3.0 — Clinical Reasoning Engine</div>
     </div>
 </body>
 </html>
+

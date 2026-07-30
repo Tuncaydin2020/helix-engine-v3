@@ -14,6 +14,8 @@ class EvidenceAtom:
         confidence: float = 0.5,
         study_type: str = "unknown",
         evidence_type: str = "unknown",
+        journal: Optional[str] = None,
+        publication_date: Optional[str] = None,
     ):
         self.subject = subject
         self.relationship = relationship
@@ -22,6 +24,8 @@ class EvidenceAtom:
         self.confidence = max(0.0, min(1.0, confidence))
         self.study_type = study_type
         self.evidence_type = evidence_type
+        self.journal = journal
+        self.publication_date = publication_date
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -32,6 +36,8 @@ class EvidenceAtom:
             "confidence": self.confidence,
             "study_type": self.study_type,
             "evidence_type": self.evidence_type,
+            "journal": self.journal,
+            "publication_date": self.publication_date,
         }
 
     @classmethod
@@ -44,6 +50,8 @@ class EvidenceAtom:
             confidence=data.get("confidence", 0.5),
             study_type=data.get("study_type", "unknown"),
             evidence_type=data.get("evidence_type", "unknown"),
+            journal=data.get("journal"),
+            publication_date=data.get("publication_date"),
         )
 
 
@@ -72,4 +80,3 @@ class ReasoningResult:
                 "hypothesis": self.hypothesis,
             },
         }
-    

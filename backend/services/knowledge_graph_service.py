@@ -27,9 +27,38 @@ class KnowledgeGraphService:
             "relationship": relationship,
             "object": object,
             "source": atom.source,
-            "confidence": atom.confidence
+            "confidence": atom.confidence,
+            "study_type": atom.study_type,
+            "evidence_type": atom.evidence_type,
         })
         print(f"✅ Graph now has {len(self.nodes)} nodes and {len(self.edges)} edges")
+
+    def load_from_db(self, db_service) -> None:
+        """
+        Load evidence atoms from the database into the knowledge graph.
+        This is called by HELIXEngine on initialization.
+        """
+        print("📊 load_from_db() called")
+        if not db_service:
+            print("⚠️  No database service provided.")
+            return
+        
+        print("📊 Fetching atoms from database...")
+        atoms = db_service.get_all_atoms()
+        print(f"📊 Retrieved {len(atoms)} atoms from database.")
+        
+        if not atoms:
+            print("ℹ️  No atoms found in database.")
+            return
+        
+        # Clear existing graph before loading
+        self.nodes = set()
+        self.edges = []
+        
+        for atom in atoms:
+            self.add_atom(atom)
+        
+        print(f"📊 Graph loaded: {len(self.nodes)} nodes, {len(self.edges)} edges.")
 
     def get_connections(self, concept: str) -> List[Dict[str, str]]:
         """Get all relationships involving a concept."""
@@ -42,14 +71,9 @@ class KnowledgeGraphService:
 
     def find_pathways(self, start: str, end: str, max_depth: int = 5) -> List[List[str]]:
         """Find pathways between two concepts."""
-        # Normalize to lowercase for case-insensitive matching
         start = start.lower()
         end = end.lower()
         
-        print(f"🔍 Finding pathways from {start} to {end}")
-        print(f"🔍 Current nodes: {self.nodes}")
-        print(f"🔍 Current edges: {self.edges}")
-
         if start not in self.nodes:
             print(f"⚠️  Start node '{start}' not in graph")
             return []
@@ -59,7 +83,6 @@ class KnowledgeGraphService:
 
         pathways = []
         self._dfs(start, end, [start], pathways, max_depth)
-        print(f"✅ Found {len(pathways)} pathways")
         return pathways
 
     def _dfs(self, current: str, target: str, path: List[str], pathways: List[List[str]], max_depth: int):
@@ -70,7 +93,6 @@ class KnowledgeGraphService:
             pathways.append(path.copy())
             return
 
-        # Get all neighbors of the current node
         neighbors = []
         for edge in self.edges:
             if edge["subject"] == current and edge["object"] not in path:
@@ -89,3 +111,4 @@ class KnowledgeGraphService:
             "nodes": len(self.nodes),
             "edges": len(self.edges),
         }
+
