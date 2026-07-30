@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: helix-engine
+    runtime: python
+    plan: free
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn frontend.app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///helix.db
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+
