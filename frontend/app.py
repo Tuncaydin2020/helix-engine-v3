@@ -1,0 +1,75 @@
+"""
+HELIX Web Dashboard
+"""
+
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from flask import Flask, render_template, request, redirect, url_for
+from backend.models import EvidenceAtom
+from backend.engine import HELIXEngine
+
+app = Flask(__name__)
+engine = HELIXEngine()
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    subject = request.form.get("subject", "").strip()
+    relationship = request.form.get("relationship", "").strip()
+    object = request.form.get("object", "").strip()
+    source = request.form.get("source", "manual").strip()
+
+    try:
+        confidence = float(request.form.get("confidence", 0.5))
+    except ValueError:
+        confidence = 0.5
+
+    study_type = request.form.get("study_type", "unknown").strip()
+    evidence_type = request.form.get("evidence_type", "unknown").strip()
+
+    atom = EvidenceAtom(
+        subject=subject,
+        relationship=relationship,
+        object=object,
+        source=source,
+        confidence=confidence,
+        study_type=study_type,
+        evidence_type=evidence_type,
+    )
+
+    result = engine.process(atom)
+    return render_template("results.html", result=result)
+
+@app.route("/connections/<concept>")
+def connections(concept):
+    """Show connections for a concept."""
+    connections = engine.get_connections(concept)
+    return render_template("connections.html", concept=concept, connections=connections)
+
+@app.route("/pathways")
+def pathways_form():
+    """Form to find pathways."""
+    return render_template("pathways.html")
+
+@app.route("/pathways/result")
+def pathways_result():
+    """Find and display pathways between two concepts."""
+    start = request.args.get("start", "").strip()
+    end = request.args.get("end", "").strip()
+    
+    if not start or not end:
+        return redirect(url_for("pathways_form"))
+    
+    pathways = engine.find_pathways(start, end)
+    return render_template("pathways_result.html", start=start, end=end, pathways=pathways)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5003)
+
+
+

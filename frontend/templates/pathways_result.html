@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 HELIX - Pathways Result</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 48px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 28px;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+            margin: 0 0 24px 0;
+        }
+        .pathway {
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #2563eb;
+        }
+        .pathway-step {
+            display: inline-block;
+            padding: 4px 14px;
+            background: white;
+            border-radius: 16px;
+            margin: 4px;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .arrow {
+            color: #2563eb;
+            font-weight: bold;
+            margin: 0 4px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 16px;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #1d4ed8;
+        }
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+        .pathway-count {
+            background: #2563eb;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛤️ Pathways Found</h1>
+        <p class="subtitle">From <strong style="color: #2563eb;">{{ start }}</strong> to <strong style="color: #2563eb;">{{ end }}</strong></p>
+
+        {% if pathways %}
+            <span class="pathway-count">{{ pathways|length }} pathway{% if pathways|length > 1 %}s{% endif %} found</span>
+            {% for pathway in pathways %}
+                <div class="pathway">
+                    <strong style="color: #475569;">Pathway {{ loop.index }}:</strong>
+                    <div style="margin-top: 8px;">
+                        {% for step in pathway %}
+                            <span class="pathway-step">{{ step }}</span>
+                            {% if not loop.last %}<span class="arrow">→</span>{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <div class="icon">🛤️</div>
+                <p style="font-size: 18px; font-weight: 500; color: #475569;">No pathways found</p>
+                <p style="color: #94a3b8;">Try a different pair of concepts, or add more evidence to build the knowledge graph.</p>
+            </div>
+        {% endif %}
+
+        <div class="nav-links">
+            <a href="/pathways">🔄 New Search</a>
+            <a href="/">🏠 Dashboard</a>
+        </div>
+
+        <div class="footer">HELIX Engine v3.0 — Clinical Reasoning Engine</div>
+    </div>
+</body>
+</html>
+
+

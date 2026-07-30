@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 HELIX - Pathways</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f0f4f8; margin: 0; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; }
+        h1 { color: #0f172a; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; color: #334155; font-size: 14px; margin-bottom: 4px; }
+        input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+        .btn { background: #2563eb; color: white; font-weight: 600; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 8px; }
+        .btn:hover { background: #1d4ed8; }
+        .footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 30px; }
+        a { color: #2563eb; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛤️ Find Pathways</h1>
+        <p style="color: #64748b;">Discover connections between two scientific concepts.</p>
+
+        <form method="GET" action="/pathways/result">
+            <div class="form-group">
+                <label for="start">Start Concept</label>
+                <input type="text" id="start" name="start" placeholder="e.g., Alpha-synuclein" required>
+            </div>
+            <div class="form-group">
+                <label for="end">End Concept</label>
+                <input type="text" id="end" name="end" placeholder="e.g., Parkinson's disease" required>
+            </div>
+            <button type="submit" class="btn">🔍 Find Pathways</button>
+        </form>
+
+        <div style="margin-top: 20px;">
+            <a href="/">← Back to Dashboard</a>
+        </div>
+
+        <div class="footer">HELIX Engine v3.0 — Clinical Reasoning Engine</div>
+    </div>
+</body>
+</html>
+
